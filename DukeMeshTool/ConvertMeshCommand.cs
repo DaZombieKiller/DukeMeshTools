@@ -59,8 +59,9 @@ internal static unsafe class ConvertMeshCommand
             return;
         }
 
-        mesh.ComputeBoneInfo(skeleton);
         mesh.NormalizeBoneWeights();
+        mesh.ComputeBoneInfo(skeleton);
+        mesh.ComputeBoundingBox();
 
         if (Path.GetDirectoryName(output) is { Length: > 0 } directory)
             Directory.CreateDirectory(directory);
@@ -321,13 +322,6 @@ internal static unsafe class ConvertMeshCommand
     {
         var result        = new SkinMesh();
         ushort baseVertex = 0;
-
-        // Init an invalid bbox
-        result.BoundingBox = new BoundingBox
-        {
-            Min = new Vector3(float.MaxValue),
-            Max = new Vector3(float.MinValue),
-        };
         
         for (int m = 0; m < scene->mNumMeshes; m++)
         {
@@ -388,7 +382,6 @@ internal static unsafe class ConvertMeshCommand
                     group.MinVertex = ushort.Min(group.MinVertex, index);
                     group.MinVertex = ushort.Max(group.MaxVertex, index);
                     group.Indices.Add(index);
-                    result.BoundingBox.Expand(result.Positions[index] * 2);
                 }
             }
 

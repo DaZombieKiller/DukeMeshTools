@@ -28,6 +28,20 @@ public sealed class SkinMesh : IUnSerializable
 
     public int Unknown;
 
+    public void ComputeBoundingBox(float scale = 2)
+    {
+        BoundingBox = new BoundingBox
+        {
+            Min = new Vector3(float.PositiveInfinity),
+            Max = new Vector3(float.NegativeInfinity),
+        };
+
+        for (int i = 0; i < Positions.Count; i++)
+        {
+            BoundingBox.Expand(Positions[i] * scale);
+        }
+    }
+
     public void NormalizeBoneWeights()
     {
         for (int i = 0; i < BlendWeights.Count; i++)
