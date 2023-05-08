@@ -1,0 +1,12 @@
+<Project>
+    <PropertyGroup>
+        <PublishTrimmed>true</PublishTrimmed>
+        <EnableUnsafeUTF7Encoding>false</EnableUnsafeUTF7Encoding>
+        <EnableUnsafeBinaryFormatterSerialization>false</EnableUnsafeBinaryFormatterSerialization>
+        <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
+        <InvariantGlobalization>true</InvariantGlobalization>
+        <MetadataUpdaterSupport>false</MetadataUpdaterSupport>
+        <UseNativeHttpHandler>true</UseNativeHttpHandler>
+        <PublishDir>$(MSBuildThisFileDirectory)Bin</PublishDir>
+    </PropertyGroup>
+</Project>

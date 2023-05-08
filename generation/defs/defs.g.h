@@ -1,0 +1,1 @@
+#include <assimp/defs.h>

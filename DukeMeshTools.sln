@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DukeMeshTool", "DukeMeshTool\DukeMeshTool.csproj", "{62881505-4AB0-4275-97A5-4E66B33CF193}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssImp.Interop", "AssImp.Interop\AssImp.Interop.csproj", "{F9F53B01-0B6A-4A66-9B4C-E108852990C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DukeForever", "DukeForever\DukeForever.csproj", "{82F5DC29-52CD-4C8E-8599-AC5DCE786132}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{62881505-4AB0-4275-97A5-4E66B33CF193}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62881505-4AB0-4275-97A5-4E66B33CF193}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62881505-4AB0-4275-97A5-4E66B33CF193}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62881505-4AB0-4275-97A5-4E66B33CF193}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4314AF92-2D8D-4103-9D23-B8C90F002954}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4314AF92-2D8D-4103-9D23-B8C90F002954}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4314AF92-2D8D-4103-9D23-B8C90F002954}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4314AF92-2D8D-4103-9D23-B8C90F002954}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9F53B01-0B6A-4A66-9B4C-E108852990C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9F53B01-0B6A-4A66-9B4C-E108852990C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9F53B01-0B6A-4A66-9B4C-E108852990C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9F53B01-0B6A-4A66-9B4C-E108852990C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82F5DC29-52CD-4C8E-8599-AC5DCE786132}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82F5DC29-52CD-4C8E-8599-AC5DCE786132}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82F5DC29-52CD-4C8E-8599-AC5DCE786132}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82F5DC29-52CD-4C8E-8599-AC5DCE786132}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
