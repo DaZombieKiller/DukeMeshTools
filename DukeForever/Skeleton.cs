@@ -61,7 +61,7 @@ public sealed class Skeleton : IUnSerializable
 
     private void Serialize0(UnSerializer ar)
     {
-        byte boneCount = 0;
+        byte boneCount = (byte)Bones.Count;
         ar.Serialize(ref boneCount);
         Bones.EnsureCount(boneCount);
 
@@ -70,7 +70,7 @@ public sealed class Skeleton : IUnSerializable
             Bones[i].Serialize(ar);
         }
 
-        byte boneSetCount = 0;
+        byte boneSetCount = (byte)BoneSets.Count;
         ar.Serialize(ref boneSetCount);
         BoneSets.EnsureCount(boneSetCount);
 

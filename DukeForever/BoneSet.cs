@@ -9,7 +9,7 @@ public sealed class BoneSet : IUnSerializable
     public void Serialize(UnSerializer ar)
     {
         ar.SerializeFixedString(ref Name, 128);
-        byte count = 0;
+        byte count = (byte)Bones.Count;
         ar.Serialize(ref count);
         Bones.EnsureCount(count);
 

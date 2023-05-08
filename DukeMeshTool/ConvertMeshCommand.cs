@@ -5,7 +5,6 @@ using System.CommandLine.Invocation;
 using System.Runtime.InteropServices;
 using System.Diagnostics.CodeAnalysis;
 using DukeForever;
-using DukeMeshTool;
 using AssImp.Interop;
 using static AssImp.Interop.AssImp;
 using System.Runtime.CompilerServices;
@@ -53,7 +52,7 @@ internal static unsafe class ConvertMeshCommand
         skeleton.ComputeIndices();
         skeleton.ComputeMatrices();
 
-        if (!TryImportModel(input, skeleton, out var mesh))
+        if (!TryImportModel(input, skeleton, out var mesh, out var pScene))
         {
             Console.Error.WriteLine("Failed to import model.");
             return;
@@ -78,14 +77,39 @@ internal static unsafe class ConvertMeshCommand
             var scene   = new aiScene();
             BuildScene(&scene, skeleton, mesh);
             aiExportScene(&scene, pFormat, pOutput, 0);
-            return;
         }
-
-        using (var fs = File.Open(output, FileMode.Create, FileAccess.Write))
+        else
         {
-            var writer = new UnStreamWriter(fs);
+            using var fs = File.Open(output, FileMode.Create, FileAccess.Write);
+            var writer   = new UnStreamWriter(fs);
             mesh.Serialize(writer);
         }
+    }
+
+    private static Dictionary<string, nuint> BuildNodeMap(aiScene* scene)
+    {
+        var nodeMap  = new Dictionary<string, nuint>();
+        var rootNode = scene->mRootNode;
+
+        if (rootNode != null)
+        {
+            AddNodes(rootNode);
+        }
+
+        void AddNodes(aiNode* node)
+        {
+            var name = node->mName;
+            var span = new Span<byte>(name.data, (int)name.length);
+            var str  = Encoding.UTF8.GetString(span);
+            nodeMap.Add(str, (nuint)rootNode);
+
+            for (uint i = 0; i < node->mNumChildren; i++)
+            {
+                AddNodes(node->mChildren[i]);
+            }
+        }
+
+        return nodeMap;
     }
 
     private static T* Alloc<T>(int count = 1)
@@ -270,7 +294,7 @@ internal static unsafe class ConvertMeshCommand
         return nodes;
     }
 
-    private static bool TryImportModel(string path, Skeleton skeleton, [NotNullWhen(true)] out SkinMesh? mesh)
+    private static bool TryImportModel(string path, Skeleton skeleton, [NotNullWhen(true)] out SkinMesh? mesh, out aiScene* scene)
     {
         if (Path.GetExtension(path) == ".msh")
         {
@@ -282,10 +306,10 @@ internal static unsafe class ConvertMeshCommand
                 mesh.Serialize(reader);
             }
 
+            scene = null;
             return true;
         }
 
-        aiScene* scene;
         var steps = 0
             | aiPostProcessSteps.aiProcess_GenSmoothNormals
             | aiPostProcessSteps.aiProcess_CalcTangentSpace
@@ -314,7 +338,6 @@ internal static unsafe class ConvertMeshCommand
         }
 
         mesh = CreateSkinMesh(scene, boneMap);
-        aiReleaseImport(scene);
         return true;
     }
 
@@ -399,6 +422,27 @@ internal static unsafe class ConvertMeshCommand
         r.X = v.z;
         r.Y = -v.x;
         r.Z = v.y;
+        return r;
+    }
+
+    // assimp -> dnf
+    private static Vector3 SwizzleScale(aiVector3D v)
+    {
+        Vector3 r;
+        r.X = v.z;
+        r.Y = v.x;
+        r.Z = v.y;
+        return r;
+    }
+
+    // assimp -> dnf
+    private static Quaternion SwizzleQuaternion(aiQuaternion p)
+    {
+        Quaternion r;
+        r.W = -p.w;
+        r.X = -p.z;
+        r.Y = p.x;
+        r.Z = -p.y;
         return r;
     }
 }
