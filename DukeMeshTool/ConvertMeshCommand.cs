@@ -388,7 +388,7 @@ internal static unsafe class ConvertMeshCommand
                     group.MinVertex = ushort.Min(group.MinVertex, index);
                     group.MinVertex = ushort.Max(group.MaxVertex, index);
                     group.Indices.Add(index);
-                    result.BoundingBox.Expand(result.Positions[index]);
+                    result.BoundingBox.Expand(result.Positions[index] * 2);
                 }
             }
 
