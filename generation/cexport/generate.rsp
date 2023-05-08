@@ -1,0 +1,7 @@
+@../base.rsp
+--file
+cexport.g.h
+--output
+../../AssImp.Interop/Generated/cexport
+--traverse
+../../assimp/include/assimp/cexport.h

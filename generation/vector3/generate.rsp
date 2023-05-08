@@ -1,0 +1,7 @@
+@../base.rsp
+--file
+vector3.g.h
+--output
+../../AssImp.Interop/Generated/vector3
+--traverse
+../../assimp/include/assimp/vector3.h

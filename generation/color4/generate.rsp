@@ -1,0 +1,7 @@
+@../base.rsp
+--file
+color4.g.h
+--output
+../../AssImp.Interop/Generated/color4
+--traverse
+../../assimp/include/assimp/color4.h

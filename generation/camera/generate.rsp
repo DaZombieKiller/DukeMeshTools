@@ -1,0 +1,7 @@
+@../base.rsp
+--file
+camera.g.h
+--output
+../../AssImp.Interop/Generated/camera
+--traverse
+../../assimp/include/assimp/camera.h

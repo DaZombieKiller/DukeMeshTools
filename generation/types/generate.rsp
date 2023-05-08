@@ -1,0 +1,7 @@
+@../base.rsp
+--file
+types.g.h
+--output
+../../AssImp.Interop/Generated/types
+--traverse
+../../assimp/include/assimp/types.h

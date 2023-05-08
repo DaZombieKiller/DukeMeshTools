@@ -1,0 +1,7 @@
+@../base.rsp
+--file
+aabb.g.h
+--output
+../../AssImp.Interop/Generated/aabb
+--traverse
+../../assimp/include/assimp/aabb.h

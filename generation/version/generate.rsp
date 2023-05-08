@@ -1,0 +1,7 @@
+@../base.rsp
+--file
+version.g.h
+--output
+../../AssImp.Interop/Generated/version
+--traverse
+../../assimp/include/assimp/version.h

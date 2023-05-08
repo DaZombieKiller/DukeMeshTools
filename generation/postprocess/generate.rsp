@@ -1,0 +1,7 @@
+@../base.rsp
+--file
+postprocess.g.h
+--output
+../../AssImp.Interop/Generated/postprocess
+--traverse
+../../assimp/include/assimp/postprocess.h

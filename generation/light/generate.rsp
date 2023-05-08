@@ -1,0 +1,7 @@
+@../base.rsp
+--file
+light.g.h
+--output
+../../AssImp.Interop/Generated/light
+--traverse
+../../assimp/include/assimp/light.h

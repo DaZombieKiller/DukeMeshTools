@@ -1,0 +1,7 @@
+@../base.rsp
+--file
+anim.g.h
+--output
+../../AssImp.Interop/Generated/anim
+--traverse
+../../assimp/include/assimp/anim.h

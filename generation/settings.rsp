@@ -1,0 +1,17 @@
+--additional
+-m64
+-Wno-deprecated-declarations
+-x
+c
+--config
+exclude-enum-operators
+exclude-funcs-with-body
+generate-file-scoped-namespaces
+multi-file
+preview-codegen
+--include-directory
+../../assimp/include
+--methodClassName
+AssImp
+--namespace
+AssImp.Interop

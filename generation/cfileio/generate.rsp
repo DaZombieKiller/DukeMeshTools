@@ -1,0 +1,7 @@
+@../base.rsp
+--file
+cfileio.g.h
+--output
+../../AssImp.Interop/Generated/cfileio
+--traverse
+../../assimp/include/assimp/cfileio.h

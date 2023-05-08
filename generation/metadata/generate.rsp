@@ -1,0 +1,9 @@
+@../base.rsp
+--file
+metadata.g.h
+--exclude
+aiString
+--output
+../../AssImp.Interop/Generated/metadata
+--traverse
+../../assimp/include/assimp/metadata.h

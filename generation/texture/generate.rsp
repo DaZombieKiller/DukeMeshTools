@@ -1,0 +1,7 @@
+@../base.rsp
+--file
+texture.g.h
+--output
+../../AssImp.Interop/Generated/texture
+--traverse
+../../assimp/include/assimp/texture.h

@@ -1,0 +1,7 @@
+@../base.rsp
+--file
+importerdesc.g.h
+--output
+../../AssImp.Interop/Generated/importerdesc
+--traverse
+../../assimp/include/assimp/importerdesc.h

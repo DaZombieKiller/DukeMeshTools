@@ -1,0 +1,7 @@
+@../base.rsp
+--file
+matrix4x4.g.h
+--output
+../../AssImp.Interop/Generated/matrix4x4
+--traverse
+../../assimp/include/assimp/matrix4x4.h

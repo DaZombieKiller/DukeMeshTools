@@ -1,0 +1,7 @@
+@../base.rsp
+--file
+material.g.h
+--output
+../../AssImp.Interop/Generated/material
+--traverse
+../../assimp/include/assimp/material.h

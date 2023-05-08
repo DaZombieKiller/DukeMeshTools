@@ -1,0 +1,7 @@
+@../base.rsp
+--file
+mesh.g.h
+--output
+../../AssImp.Interop/Generated/mesh
+--traverse
+../../assimp/include/assimp/mesh.h

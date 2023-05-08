@@ -1,0 +1,7 @@
+@../base.rsp
+--file
+matrix3x3.g.h
+--output
+../../AssImp.Interop/Generated/matrix3x3
+--traverse
+../../assimp/include/assimp/matrix3x3.h

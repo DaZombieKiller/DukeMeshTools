@@ -1,0 +1,7 @@
+@../base.rsp
+--file
+defs.g.h
+--output
+../../AssImp.Interop/Generated/defs
+--traverse
+../../assimp/include/assimp/defs.h

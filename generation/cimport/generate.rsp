@@ -1,0 +1,7 @@
+@../base.rsp
+--file
+cimport.g.h
+--output
+../../AssImp.Interop/Generated/cimport
+--traverse
+../../assimp/include/assimp/cimport.h

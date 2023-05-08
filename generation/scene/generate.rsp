@@ -1,0 +1,7 @@
+@../base.rsp
+--file
+scene.g.h
+--output
+../../AssImp.Interop/Generated/scene
+--traverse
+../../assimp/include/assimp/scene.h

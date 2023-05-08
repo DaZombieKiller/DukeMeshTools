@@ -1,0 +1,7 @@
+@../base.rsp
+--file
+quaternion.g.h
+--output
+../../AssImp.Interop/Generated/quaternion
+--traverse
+../../assimp/include/assimp/quaternion.h
