@@ -44,31 +44,34 @@ internal static unsafe class ConvertSkeletonCommand
         r.length = (uint)Encoding.UTF8.GetBytes(s, span);
     }
 
-    private static Vector3 SwizzlePosition(Vector3 p)
+    // dnf -> assimp
+    private static aiVector3D SwizzlePosition(Vector3 p)
     {
-        Vector3 r;
-        r.X = -p.Y;
-        r.Y = p.Z;
-        r.Z = p.X;
+        aiVector3D r;
+        r.x = -p.Y;
+        r.y = p.Z;
+        r.z = p.X;
         return r;
     }
 
-    private static Vector3 SwizzleScale(Vector3 p)
+    // dnf -> assimp
+    private static aiVector3D SwizzleScale(Vector3 p)
     {
-        Vector3 r;
-        r.X = p.Y;
-        r.Y = p.Z;
-        r.Z = p.X;
+        aiVector3D r;
+        r.x = p.Y;
+        r.y = p.Z;
+        r.z = p.X;
         return r;
     }
 
-    private static Quaternion SwizzleQuaternion(Quaternion p)
+    // dnf -> assimp
+    private static aiQuaternion SwizzleQuaternion(Quaternion p)
     {
-        Quaternion r;
-        r.X = -p.W;
-        r.Y = p.Y;
-        r.Z = -p.Z;
-        r.W = -p.X;
+        aiQuaternion r;
+        r.w = -p.W;
+        r.x = p.Y;
+        r.y = -p.Z;
+        r.z = -p.X;
         return r;
     }
 
@@ -123,7 +126,7 @@ internal static unsafe class ConvertSkeletonCommand
             var t = SwizzlePosition(skeleton.Bones[i].Translate);
             var r = SwizzleQuaternion(skeleton.Bones[i].Rotate);
             var s = SwizzleScale(skeleton.Bones[i].Scale);
-            aiMatrix4FromScalingQuaternionPosition(&nodes[i]->mTransformation, (aiVector3D*)&s, (aiQuaternion*)&r, (aiVector3D*)&t);
+            aiMatrix4FromScalingQuaternionPosition(&nodes[i]->mTransformation, &s, &r, &t);
 
             if (skeleton.Bones[i].Parent == 0xFF)
                 nodes[i]->mParent = &root;
