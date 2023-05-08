@@ -150,11 +150,6 @@ internal static unsafe class ConvertSkeletonCommand
 
         var builder = new SkeletonMeshBuilder();
         builder.Build(&scene, &root, genTris ? SkeletonMeshGenerationMode.Default : SkeletonMeshGenerationMode.BonesOnly);
-
-        var count = aiGetExportFormatCount();
-        for (uint i = 0; i < count; i++)
-            Console.WriteLine(Marshal.PtrToStringUTF8((nint)aiGetExportFormatDescription(i)->id));
-
         var formatId = Marshal.StringToCoTaskMemUTF8(format);
         var fileName = Marshal.StringToCoTaskMemUTF8(Path.GetFullPath(output));
         var result   = aiExportScene(&scene, (sbyte*)formatId, (sbyte*)fileName, 0);
