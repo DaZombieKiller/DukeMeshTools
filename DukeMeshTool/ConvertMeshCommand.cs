@@ -215,6 +215,7 @@ internal static unsafe class ConvertMeshCommand
                 mesh->mNormals[v]  = SwizzlePosition(skinMesh.Normals[group.MinVertex + v]);
                 mesh->mTangents[v] = SwizzlePosition(skinMesh.Tangents[group.MinVertex + v]);
                 *(Vector3*)&mesh->mTextureCoords[0][v] = skinMesh.UVs[group.MinVertex + v];
+                mesh->mTextureCoords[0][v].y = 1 - mesh->mTextureCoords[0][v].y;
             }
 
             for (int f = 0; f < mesh->mNumFaces; f++)
