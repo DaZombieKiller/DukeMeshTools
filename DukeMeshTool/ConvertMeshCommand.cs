@@ -223,8 +223,8 @@ internal static unsafe class ConvertMeshCommand
                 mesh->mFaces[f].mNumIndices = 3;
                 mesh->mFaces[f].mIndices    = Alloc<uint>(3);
                 mesh->mFaces[f].mIndices[0] = (uint)(group.Indices[3 * f + 0] - group.MinVertex);
-                mesh->mFaces[f].mIndices[1] = (uint)(group.Indices[3 * f + 1] - group.MinVertex);
-                mesh->mFaces[f].mIndices[2] = (uint)(group.Indices[3 * f + 2] - group.MinVertex);
+                mesh->mFaces[f].mIndices[2] = (uint)(group.Indices[3 * f + 1] - group.MinVertex);
+                mesh->mFaces[f].mIndices[1] = (uint)(group.Indices[3 * f + 2] - group.MinVertex);
             }
         }
 
