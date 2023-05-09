@@ -199,7 +199,7 @@ internal static unsafe class ConvertMeshCommand
             var mesh                  = Alloc<aiMesh>();
             scene->mMeshes[i]         = mesh;
             mesh->mMaterialIndex      = i;
-            mesh->mNumVertices        = (uint)(group.MaxVertex - group.MinVertex);
+            mesh->mNumVertices        = (uint)((group.MaxVertex + 1) - group.MinVertex);
             mesh->mVertices           = Alloc<aiVector3D>((int)mesh->mNumVertices);
             mesh->mNormals            = Alloc<aiVector3D>((int)mesh->mNumVertices);
             mesh->mTangents           = Alloc<aiVector3D>((int)mesh->mNumVertices);
