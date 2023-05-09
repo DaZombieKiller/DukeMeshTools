@@ -111,6 +111,9 @@ public sealed class SkinMesh : IUnSerializable
                     }
                 }
 
+                if (boneIndex == 0xFF)
+                    continue;
+
                 // Expand the bone's local space bounding box to include the vertices of this triangle.
                 Matrix4x4.Invert(skeleton.Bones[boneIndex].WorldMatrix, out var inverseBindPose);
 
