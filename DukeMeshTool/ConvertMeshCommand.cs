@@ -23,6 +23,8 @@ internal static unsafe class ConvertMeshCommand
 
     private static readonly Option<string> s_FormatOption = new("--format");
 
+    private static readonly Option<string> s_AutoRigOption = new("--auto-rig");
+
     static ConvertMeshCommand()
     {
         Command = new Command("convert");
@@ -31,6 +33,7 @@ internal static unsafe class ConvertMeshCommand
         Command.AddArgument(s_SkeletonArgument);
         Command.AddArgument(s_OutputArgument);
         Command.AddOption(s_FormatOption);
+        Command.AddOption(s_AutoRigOption);
         Handler.SetHandler(Command, Execute);
     }
 
@@ -41,6 +44,7 @@ internal static unsafe class ConvertMeshCommand
         var output   = context.ParseResult.GetValueForArgument(s_OutputArgument);
         var skelPath = context.ParseResult.GetValueForArgument(s_SkeletonArgument);
         var format   = context.ParseResult.GetValueForOption(s_FormatOption);
+        var autoRig  = context.ParseResult.GetValueForOption(s_AutoRigOption);
         var skeleton = new Skeleton();
 
         using (var fs = File.OpenRead(skelPath))
@@ -51,11 +55,32 @@ internal static unsafe class ConvertMeshCommand
 
         skeleton.ComputeIndices();
         skeleton.ComputeMatrices();
+        var boneMap = new Dictionary<string, int>();
 
-        if (!TryImportModel(input, skeleton, out var mesh, out var pScene))
+        for (int i = 0; i < skeleton.Bones.Count; i++)
+        {
+            boneMap[skeleton.Bones[i].Name] = i;
+        }
+
+        if (!TryImportModel(input, boneMap, out var mesh, out var pScene))
         {
             Console.Error.WriteLine("Failed to import model.");
             return;
+        }
+
+        if (autoRig != null)
+        {
+            if (!boneMap.TryGetValue(autoRig, out int boneIndex))
+                Console.Error.WriteLine($"Error: Model does not contain a bone named '{autoRig}'.");
+            else
+            {
+                for (int i = 0; i < mesh.Positions.Count; i++)
+                {
+                    mesh.BonesPerVertex[i] = 1;
+                    mesh.BlendIndices[i]   = new BlendIndices { BoneIndex0 = (byte)boneIndex };
+                    mesh.BlendWeights[i]   = new BlendWeights { Weight0    = 1 };
+                }
+            }
         }
 
         mesh.NormalizeBoneWeights();
@@ -294,7 +319,7 @@ internal static unsafe class ConvertMeshCommand
         return nodes;
     }
 
-    private static bool TryImportModel(string path, Skeleton skeleton, [NotNullWhen(true)] out SkinMesh? mesh, out aiScene* scene)
+    private static bool TryImportModel(string path, Dictionary<string, int> boneMap, [NotNullWhen(true)] out SkinMesh? mesh, out aiScene* scene)
     {
         if (Path.GetExtension(path) == ".msh")
         {
@@ -318,13 +343,6 @@ internal static unsafe class ConvertMeshCommand
             | aiPostProcessSteps.aiProcess_FlipWindingOrder
             | aiPostProcessSteps.aiProcess_GlobalScale
             | aiPostProcessSteps.aiProcess_LimitBoneWeights;
-
-        var boneMap = new Dictionary<string, int>();
-
-        for (int i = 0; i < skeleton.Bones.Count; i++)
-        {
-            boneMap[skeleton.Bones[i].Name] = i;
-        }
 
         var pPath = Marshal.StringToCoTaskMemUTF8(path);
         scene     = aiImportFile((sbyte*)pPath, (uint)steps);
