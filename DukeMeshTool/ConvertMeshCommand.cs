@@ -25,6 +25,8 @@ internal static unsafe class ConvertMeshCommand
 
     private static readonly Option<string> s_AutoRigOption = new("--auto-rig");
 
+    private static readonly Option<bool> s_NoGlobalScaleOption = new("--no-global-scale");
+
     static ConvertMeshCommand()
     {
         Command = new Command("convert");
@@ -34,6 +36,7 @@ internal static unsafe class ConvertMeshCommand
         Command.AddArgument(s_OutputArgument);
         Command.AddOption(s_FormatOption);
         Command.AddOption(s_AutoRigOption);
+        Command.AddOption(s_NoGlobalScaleOption);
         Handler.SetHandler(Command, Execute);
     }
 
@@ -62,7 +65,18 @@ internal static unsafe class ConvertMeshCommand
             boneMap[skeleton.Bones[i].Name] = i;
         }
 
-        if (!TryImportModel(input, boneMap, out var mesh, out var pScene))
+        var flags =
+            aiPostProcessSteps.aiProcess_GenSmoothNormals |
+            aiPostProcessSteps.aiProcess_CalcTangentSpace |
+            aiPostProcessSteps.aiProcess_Triangulate |
+            aiPostProcessSteps.aiProcess_FlipUVs |
+            aiPostProcessSteps.aiProcess_FlipWindingOrder |
+            aiPostProcessSteps.aiProcess_LimitBoneWeights;
+
+        if (!context.ParseResult.GetValueForOption(s_NoGlobalScaleOption))
+            flags |= aiPostProcessSteps.aiProcess_GlobalScale;
+
+        if (!TryImportModel(input, flags, boneMap, out var mesh, out var pScene))
         {
             Console.Error.WriteLine("Failed to import model.");
             return;
@@ -320,7 +334,7 @@ internal static unsafe class ConvertMeshCommand
         return nodes;
     }
 
-    private static bool TryImportModel(string path, Dictionary<string, int> boneMap, [NotNullWhen(true)] out SkinMesh? mesh, out aiScene* scene)
+    private static bool TryImportModel(string path, aiPostProcessSteps steps, Dictionary<string, int> boneMap, [NotNullWhen(true)] out SkinMesh? mesh, out aiScene* scene)
     {
         if (Path.GetExtension(path) == ".msh")
         {
@@ -335,15 +349,6 @@ internal static unsafe class ConvertMeshCommand
             scene = null;
             return true;
         }
-
-        var steps = 0
-            | aiPostProcessSteps.aiProcess_GenSmoothNormals
-            | aiPostProcessSteps.aiProcess_CalcTangentSpace
-            | aiPostProcessSteps.aiProcess_Triangulate
-            | aiPostProcessSteps.aiProcess_FlipUVs
-            | aiPostProcessSteps.aiProcess_FlipWindingOrder
-            | aiPostProcessSteps.aiProcess_GlobalScale
-            | aiPostProcessSteps.aiProcess_LimitBoneWeights;
 
         var pPath = Marshal.StringToCoTaskMemUTF8(path);
         scene     = aiImportFile((sbyte*)pPath, (uint)steps);
