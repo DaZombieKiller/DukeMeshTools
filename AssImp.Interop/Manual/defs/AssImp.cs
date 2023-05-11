@@ -2,9 +2,6 @@ namespace AssImp.Interop;
 
 public static partial class AssImp
 {
-    [NativeTypeName("#define SIZE_MAX (~((size_t)0))")]
-    public static nuint SIZE_MAX => nuint.MaxValue;
-
     [NativeTypeName("#define ASSIMP_AI_REAL_TEXT_PRECISION 9")]
     public const int ASSIMP_AI_REAL_TEXT_PRECISION = 9;
 
