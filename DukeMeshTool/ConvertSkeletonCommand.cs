@@ -146,6 +146,7 @@ internal static unsafe class ConvertSkeletonCommand
 
         aiScene scene = new()
         {
+            mFlags    = AI_SCENE_FLAGS_INCOMPLETE,
             mRootNode = &root
         };
 
