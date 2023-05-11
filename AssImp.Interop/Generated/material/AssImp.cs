@@ -16,9 +16,19 @@ public static unsafe partial class AssImp
     [return: NativeTypeName("enum aiReturn")]
     public static extern aiReturn aiGetMaterialFloatArray([NativeTypeName("const struct aiMaterial *")] aiMaterial* pMat, [NativeTypeName("const char *")] sbyte* pKey, [NativeTypeName("unsigned int")] uint type, [NativeTypeName("unsigned int")] uint index, [NativeTypeName("ai_real *")] float* pOut, [NativeTypeName("unsigned int *")] uint* pMax);
 
+    public static aiReturn aiGetMaterialFloat([NativeTypeName("const struct aiMaterial *")] aiMaterial* pMat, [NativeTypeName("const char *")] sbyte* pKey, [NativeTypeName("unsigned int")] uint type, [NativeTypeName("unsigned int")] uint index, [NativeTypeName("ai_real *")] float* pOut)
+    {
+        return aiGetMaterialFloatArray(pMat, pKey, type, index, pOut, unchecked((uint*)(0x0)));
+    }
+
     [DllImport("assimp", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
     [return: NativeTypeName("enum aiReturn")]
     public static extern aiReturn aiGetMaterialIntegerArray([NativeTypeName("const struct aiMaterial *")] aiMaterial* pMat, [NativeTypeName("const char *")] sbyte* pKey, [NativeTypeName("unsigned int")] uint type, [NativeTypeName("unsigned int")] uint index, int* pOut, [NativeTypeName("unsigned int *")] uint* pMax);
+
+    public static aiReturn aiGetMaterialInteger([NativeTypeName("const struct aiMaterial *")] aiMaterial* pMat, [NativeTypeName("const char *")] sbyte* pKey, [NativeTypeName("unsigned int")] uint type, [NativeTypeName("unsigned int")] uint index, int* pOut)
+    {
+        return aiGetMaterialIntegerArray(pMat, pKey, type, index, pOut, unchecked((uint*)(0x0)));
+    }
 
     [DllImport("assimp", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
     [return: NativeTypeName("enum aiReturn")]
