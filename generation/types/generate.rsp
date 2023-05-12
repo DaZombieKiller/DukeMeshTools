@@ -5,3 +5,11 @@ types.g.h
 ../../AssImp.Interop/Generated/types
 --traverse
 ../../assimp/include/assimp/types.h
+--with-type
+AI_SUCCESS=aiReturn
+AI_FAILURE=aiReturn
+AI_OUTOFMEMORY=aiReturn
+DLS_FILE=aiDefaultLogStream
+DLS_STDOUT=aiDefaultLogStream
+DLS_STDERR=aiDefaultLogStream
+DLS_DEBUGGER=aiDefaultLogStream

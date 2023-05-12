@@ -5,3 +5,8 @@ postprocess.g.h
 ../../AssImp.Interop/Generated/postprocess
 --traverse
 ../../assimp/include/assimp/postprocess.h
+--with-type
+aiProcess_ConvertToLeftHanded=aiPostProcessSteps
+aiProcessPreset_TargetRealtime_Fast=aiPostProcessSteps
+aiProcessPreset_TargetRealtime_Quality=aiPostProcessSteps
+aiProcessPreset_TargetRealtime_MaxQuality=aiPostProcessSteps

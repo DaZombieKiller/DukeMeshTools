@@ -5,8 +5,8 @@ namespace AssImp.Interop;
 
 public static partial class AssImp
 {
-    [NativeTypeName("const size_t")]
-    public const nuint MAXLEN = 1024;
+    [NativeTypeName("#define MAXLEN 1024")]
+    public const int MAXLEN = 1024;
 
     [NativeTypeName("#define AI_SUCCESS aiReturn_SUCCESS")]
     public const aiReturn AI_SUCCESS = aiReturn_SUCCESS;

@@ -5,3 +5,15 @@ material.g.h
 ../../AssImp.Interop/Generated/material
 --traverse
 ../../assimp/include/assimp/material.h
+--with-type
+AI_TEXTURE_TYPE_MAX=aiTextureType
+AI_MATKEY_BASE_COLOR_TEXTURE=aiTextureType
+AI_MATKEY_METALLIC_TEXTURE=aiTextureType
+AI_MATKEY_ROUGHNESS_TEXTURE=aiTextureType
+AI_MATKEY_SHEEN_COLOR_TEXTURE=aiTextureType
+AI_MATKEY_SHEEN_ROUGHNESS_TEXTURE=aiTextureType
+AI_MATKEY_CLEARCOAT_TEXTURE=aiTextureType
+AI_MATKEY_CLEARCOAT_ROUGHNESS_TEXTURE=aiTextureType
+AI_MATKEY_CLEARCOAT_NORMAL_TEXTURE=aiTextureType
+AI_MATKEY_TRANSMISSION_TEXTURE=aiTextureType
+AI_MATKEY_VOLUME_THICKNESS_TEXTURE=aiTextureType

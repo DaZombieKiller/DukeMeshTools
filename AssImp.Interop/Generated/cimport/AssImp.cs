@@ -322,4 +322,10 @@ public static unsafe partial class AssImp
 
     [DllImport("assimp", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
     public static extern void aiQuaternionInterpolate([NativeTypeName("struct aiQuaternion *")] aiQuaternion* dst, [NativeTypeName("const struct aiQuaternion *")] aiQuaternion* start, [NativeTypeName("const struct aiQuaternion *")] aiQuaternion* end, [NativeTypeName("const float")] float factor);
+
+    [NativeTypeName("#define AI_FALSE 0")]
+    public const int AI_FALSE = 0;
+
+    [NativeTypeName("#define AI_TRUE 1")]
+    public const int AI_TRUE = 1;
 }

@@ -1,4 +1,6 @@
 @../base.rsp
+--exclude
+SIZE_MAX
 --file
 defs.g.h
 --output
