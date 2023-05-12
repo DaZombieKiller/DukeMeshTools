@@ -336,7 +336,7 @@ internal static unsafe class ConvertMeshCommand
 
     private static bool TryImportModel(string path, aiPostProcessSteps steps, Dictionary<string, int> boneMap, [NotNullWhen(true)] out SkinMesh? mesh, out aiScene* scene)
     {
-        if (Path.GetExtension(path) == ".msh")
+        if (Path.GetExtension(path).Equals(".msh", StringComparison.OrdinalIgnoreCase))
         {
             mesh = new SkinMesh();
             
