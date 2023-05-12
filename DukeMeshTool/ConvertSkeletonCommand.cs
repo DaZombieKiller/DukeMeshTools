@@ -37,11 +37,19 @@ internal static unsafe class ConvertSkeletonCommand
         return (T*)NativeMemory.AllocZeroed((uint)count, (uint)sizeof(T));
     }
 
-    private static void CopyString(string s, out aiString r)
+    private static void CopyString(ReadOnlySpan<char> s, out aiString r)
     {
         Unsafe.SkipInit(out r);
         var span = MemoryMarshal.CreateSpan(ref Unsafe.As<sbyte, byte>(ref r.data[0]), 127);
         r.length = (uint)Encoding.UTF8.GetBytes(s, span);
+    }
+
+    private static void CopyString(ReadOnlySpan<byte> s, out aiString r)
+    {
+        Unsafe.SkipInit(out r);
+        var span = MemoryMarshal.CreateSpan(ref Unsafe.As<sbyte, byte>(ref r.data[0]), 127);
+        r.length = (uint)s.Length;
+        s.CopyTo(span);
     }
 
     // dnf -> assimp
@@ -403,27 +411,27 @@ internal static unsafe class ConvertSkeletonCommand
             matHelper->mNumAllocated  = matHelper->mNumProperties;
 
             // Name
-            CopyString("SkeletonMaterial", out var matName);
-            matHelper->mProperties[0] = CreateProperty(&matName, "?mat.name");
+            CopyString("SkeletonMaterial"u8, out var matName);
+            matHelper->mProperties[0] = CreateProperty(&matName, AI_MATKEY_NAME);
 
             // Prevent backface culling
             int no_cull = 1;
-            matHelper->mProperties[1] = CreateProperty(&no_cull, 1, "$mat.twosided");
+            matHelper->mProperties[1] = CreateProperty(&no_cull, 1, AI_MATKEY_TWOSIDED);
             
             return matHelper;
         }
 
-        private aiMaterialProperty* CreateProperty(aiString* matName, string key)
+        private aiMaterialProperty* CreateProperty(aiString* matName, ReadOnlySpan<byte> key)
         {
             return CreateBinaryProperty(matName, matName->length + 4 + 1, key, 0, 0, aiPropertyTypeInfo.aiPTI_String);
         }
 
-        private aiMaterialProperty* CreateProperty(int* pInput, uint pNumValues, string key)
+        private aiMaterialProperty* CreateProperty(int* pInput, uint pNumValues, ReadOnlySpan<byte> key)
         {
             return CreateBinaryProperty(pInput, pNumValues * 4, key, 0, 0, aiPropertyTypeInfo.aiPTI_Integer);
         }
 
-        private aiMaterialProperty* CreateBinaryProperty(void* pInput, uint pSizeInBytes, string key, uint type, uint index, aiPropertyTypeInfo pType)
+        private aiMaterialProperty* CreateBinaryProperty(void* pInput, uint pSizeInBytes, ReadOnlySpan<byte> key, uint type, uint index, aiPropertyTypeInfo pType)
         {
             var property = Alloc<aiMaterialProperty>();
             property->mType = pType;
