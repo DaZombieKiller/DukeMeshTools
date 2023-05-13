@@ -32,7 +32,26 @@ public abstract class UnSerializer
     {
         CompactIndex count = values.Count;
         count.Serialize(this);
+        Serialize(values, count);
+    }
 
+    public void Serialize(List<string> values)
+    {
+        CompactIndex count = values.Count;
+        count.Serialize(this);
+        Serialize(values, count);
+    }
+
+    public void Serialize(List<int> values)
+    {
+        CompactIndex count = values.Count;
+        count.Serialize(this);
+        Serialize(values, count);
+    }
+
+    public void Serialize<T>(List<T> values, int count)
+        where T : IUnSerializable, new()
+    {
         if (!IsSaving)
             values.Clear();
 
@@ -43,6 +62,38 @@ public abstract class UnSerializer
         {
             T value = values[i];
             value.Serialize(this);
+            values[i] = value;
+        }
+    }
+
+    public void Serialize(List<string> values, int count)
+    {
+        if (!IsSaving)
+            values.Clear();
+
+        for (int i = values.Count; i < count; i++)
+            values.Add("");
+
+        for (int i = 0; i < count; i++)
+        {
+            var value = values[i];
+            Serialize(ref value);
+            values[i] = value;
+        }
+    }
+
+    public void Serialize(List<int> values, int count)
+    {
+        if (!IsSaving)
+            values.Clear();
+
+        for (int i = values.Count; i < count; i++)
+            values.Add(0);
+
+        for (int i = 0; i < count; i++)
+        {
+            var value = values[i];
+            Serialize(ref value);
             values[i] = value;
         }
     }
